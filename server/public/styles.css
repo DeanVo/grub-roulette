@@ -1,12 +1,46 @@
 html,
 body {
-  margin: 0;
+  margin: 0 auto;
   padding: 0;
+  height: 100%;
+  max-width: 575px;
+  background-image: url(../../client/images/home-page-background.jpg);
+}
+
+.justify-content-center {
+  justify-content: center;
 }
 
 .header-container {
   font-family: 'Actor', sans-serif;
   color: #ff4b3a;
+  text-align: center;
+}
+
+.header {
+  font-size: 2.5em;
+  margin: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.sub-header {
+  font-size: 1.5rem;
+  margin-top: 0;
+}
+
+.location-bar {
+  margin-top: 3rem;
+}
+
+.search-btns {
+  justify-content: space-evenly;
+  margin-top: 1rem;
+}
+
+.map {
+  margin-top: 2.5rem;
+  margin-bottom: 1.5rem;
   text-align: center;
 }
 
@@ -19,11 +53,15 @@ body {
   font-family: 'Actor', sans-serif;
   position: fixed;
   bottom: 0;
+  max-width: 575px;
 }
 
 .nav-bar-text {
   color: white;
-  margin: 0.5rem;
+}
+
+.nav-bar-text-home {
+  padding-left: 0.5rem;
 }
 
 .home-icon,
@@ -33,14 +71,6 @@ body {
   color: white;
   text-decoration: none;
   font-size: 1.5rem;
-  margin-top: 0.5rem;
   padding-left: 1rem;
-}
-
-.heart-icon {
-  padding-left: 1.5rem;
-}
-
-.bookmark-icon {
-  padding-left: 2.1rem;
+  text-align: center;
 }

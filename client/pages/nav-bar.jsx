@@ -6,7 +6,7 @@ export default function NavBar(props) {
     <Nav className="nav-bar">
       <Nav.Item>
         <Nav.Link className="fas fa-home home-icon"></Nav.Link>
-        <p className="nav-bar-text">Home</p>
+        <p className="nav-bar-text nav-bar-text-home">Home</p>
       </Nav.Item>
       <Nav.Item>
         <Nav.Link className="fas fa-heart heart-icon"></Nav.Link>
