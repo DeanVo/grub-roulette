@@ -2,7 +2,6 @@ require('dotenv/config');
 const express = require('express');
 const staticMiddleware = require('./static-middleware');
 const fetch = require('node-fetch');
-const bearer = 'Bearer B1XbbiONAEXMh09juCgQnS7hTTLqKGirNftAINUWcPV8y_7UP4j2Jj94OaAicf5J35SJFwIjOsp_3o5-Up-udxeWGrF95IkSfLNBN20QwU1B5Gnt788NtKmxDEThX3Yx';
 const pg = require('pg');
 
 const db = new pg.Pool({
@@ -22,7 +21,7 @@ const location = 'orange county, ca';
 
 fetch(`https://api.yelp.com/v3/businesses/search?term=${term}&location=${location}`, {
   headers: {
-    Authorization: bearer
+    Authorization: process.env.BEARER
   }
 })
   .then(res => res.json())
@@ -51,7 +50,7 @@ app.get('/api/random/1', (req, res) => {
     });
 });
 
-app.patch('/api/random', (req, res) => {
+app.put('/api/random', (req, res) => {
   const sql = `
     update "randomRestaurant"
       set "name" = $1,

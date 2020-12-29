@@ -27,7 +27,7 @@ export default class Randomize extends React.Component {
 
   postDb(restaurant) {
     const requestOptions = {
-      method: 'PATCH',
+      method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(restaurant)
     };
