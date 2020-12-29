@@ -9,9 +9,6 @@ const db = new pg.Pool({
   connectionString: process.env.DATABASE_URL
 });
 
-const term = 'restaurants';
-const location = 'orange county, ca';
-
 const app = express();
 
 app.use(staticMiddleware);
@@ -20,6 +17,8 @@ app.use(express.json());
 
 let restaurantList = [];
 let selectedRestaurant = restaurantList;
+const term = 'restaurants';
+const location = 'orange county, ca';
 
 fetch(`https://api.yelp.com/v3/businesses/search?term=${term}&location=${location}`, {
   headers: {
@@ -35,6 +34,21 @@ app.get('/api/random', (req, res) => {
   selectedRestaurant = restaurantList[Math.floor(Math.random() * restaurantList.length)];
 
   res.send(selectedRestaurant);
+});
+
+app.get('/api/random/1', (req, res) => {
+  const sql = `
+    select "restaurantId",
+      "name",
+      "image"
+    from "randomRestaurant"
+    where "restaurantId" = 1
+  `;
+
+  db.query(sql)
+    .then(result => {
+      res.status(201).json(result.rows[0]);
+    });
 });
 
 app.patch('/api/random', (req, res) => {

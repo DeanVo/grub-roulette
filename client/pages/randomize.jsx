@@ -8,20 +8,20 @@ export default class Randomize extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLoading: false,
       selectedRestaurant: []
     };
     this.handleRandomizer = this.handleRandomizer.bind(this);
   }
 
-  handleRandomizer(e) {
-    this.setState({ isLoading: true });
+  componentDidMount() {
     fetch('/api/random')
       .then(response => response.json())
       .then(data => this.setState({
         selectedRestaurant: data
       }));
+  }
 
+  handleRandomizer(e) {
     this.postDb();
   }
 
@@ -34,10 +34,6 @@ export default class Randomize extends React.Component {
 
     fetch('/api/random', requestOptions)
       .then(response => response.json());
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener('click', this.handleRandomizer);
   }
 
   render() {
@@ -54,7 +50,7 @@ export default class Randomize extends React.Component {
     <>
       <Container>
           <Row className='justify-content-center'>
-          <Button className="btn btn-primary" style={rouletteButtons} onClick={this.handleRandomizer}>{'Let\'s eat!'}</Button>
+          <Button href={'#restaurants'} className="btn btn-primary" style={rouletteButtons} onClick={this.handleRandomizer}>{'Let\'s eat!'}</Button>
         </Row>
       </Container>
     </>

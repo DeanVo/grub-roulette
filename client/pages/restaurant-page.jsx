@@ -1,6 +1,6 @@
 import React from 'react';
 import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
+import fetch from 'node-fetch';
 
 export default class Restaurant extends React.Component {
   constructor(props) {
@@ -11,9 +11,7 @@ export default class Restaurant extends React.Component {
   }
 
   componentDidMount() {
-    this.setState({ isLoading: true });
-
-    fetch('/api/random')
+    fetch('/api/random/1')
       .then(response => response.json())
       .then(data => this.setState({
         selectedRestaurant: data
@@ -24,8 +22,16 @@ export default class Restaurant extends React.Component {
     const { selectedRestaurant } = this.state;
     return (
       <>
-        <Container>
-          <img className='restaurant-image' src={selectedRestaurant.image_url}></img>
+        <Container style={{
+          width: '575px',
+          height: '500px',
+          backgroundImage: `url(${selectedRestaurant.image})`,
+          backgroundPosition: 'center',
+          backgroundSize: 'cover',
+          backgroundRepeat: 'no-repeat',
+          display: 'flex',
+          alignItems: 'flex-end'
+        }}>
           <h1 className='restaurant-name'>{selectedRestaurant.name}</h1>
         </Container>
       </>
