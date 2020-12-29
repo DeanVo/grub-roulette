@@ -5,7 +5,6 @@ set client_min_messages to warning;
 drop schema "public" cascade;
 
 create schema "public";
-
 CREATE TABLE "restaurants" (
 	"restaurantId" serial NOT NULL,
 	"userId" serial NOT NULL,
@@ -104,6 +103,17 @@ CREATE TABLE "hours" (
 	"saturday" TIMESTAMP NOT NULL,
 	"sunday" TIMESTAMP NOT NULL,
 	CONSTRAINT "hours_pk" PRIMARY KEY ("restaurantId")
+) WITH (
+  OIDS=FALSE
+);
+
+
+
+CREATE TABLE "randomRestaurant" (
+	"restaurantId" serial NOT NULL,
+	"name" TEXT NOT NULL,
+	"image" TEXT NOT NULL,
+	CONSTRAINT "randomRestaurant_pk" PRIMARY KEY ("restaurantId")
 ) WITH (
   OIDS=FALSE
 );

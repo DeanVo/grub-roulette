@@ -74,3 +74,13 @@ body {
   padding-left: 1rem;
   text-align: center;
 }
+
+.restaurant-image {
+  max-width: 575px;
+  object-fit: cover;
+}
+
+.restaurant-name {
+  z-index: 100;
+  display: inline-block;
+}
