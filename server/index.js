@@ -14,6 +14,26 @@ let selectedRestaurant = restaurantList;
 const term = 'restaurants';
 const location = 'orange county, ca';
 
+// app.get('/api/random', (req, res) => {
+//   fetch(`https://api.yelp.com/v3/businesses/search?term=${term}&location=${location}`, {
+//     headers: {
+//       'Content-Type': 'application/json',
+//       Authorization: process.env.BEARER
+//     }
+//   })
+//     .then(res => res.json())
+//     .then(data => {
+//       restaurantList = data.businesses;
+//     })
+//     .then(() => {
+//       selectedRestaurant = restaurantList[Math.floor(Math.random() * restaurantList.length)];
+//       res.send(selectedRestaurant);
+//     })
+//     .catch(err => {
+//       console.error(err);
+//     });
+// });
+
 app.get('/api/random', (req, res) => {
   fetch(`https://api.yelp.com/v3/businesses/search?term=${term}&location=${location}`, {
     headers: {
@@ -24,18 +44,22 @@ app.get('/api/random', (req, res) => {
     .then(res => res.json())
     .then(data => {
       restaurantList = data.businesses;
-    })
-    .then(() => {
       selectedRestaurant = restaurantList[Math.floor(Math.random() * restaurantList.length)];
-      res.send(selectedRestaurant);
+      fetch(`https://api.yelp.com/v3/businesses/${selectedRestaurant.id}`, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: process.env.BEARER
+        }
+      })
+        .then(res => res.json())
+        .then(data => {
+          selectedRestaurant.hours = data.hours[0];
+          res.send(selectedRestaurant);
+        });
     })
     .catch(err => {
       console.error(err);
     });
-});
-
-app.get('/api/random/restaurant', (req, res) => {
-  res.send(selectedRestaurant);
 });
 
 app.listen(process.env.PORT, () => {

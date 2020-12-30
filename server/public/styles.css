@@ -12,7 +12,7 @@
   font-size: 1.5rem;
 }
 
-.restaurant-name {
+.primary-color-font {
   color: #ff4b3a;
   font-family: 'Actor', sans-serif;
 }
@@ -34,4 +34,16 @@
   position: fixed;
   top: 35%;
   left: 50%;
+}
+
+.primary-color {
+  color: #ff4b3a;
+}
+
+.green {
+  color: green;
+}
+
+.red {
+  color: red;
 }
