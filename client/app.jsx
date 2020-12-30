@@ -3,6 +3,7 @@ import parseRoute from './lib/parse-route';
 import Home from './pages/home';
 import Randomize from './pages/randomize';
 import Restaurant from './pages/restaurant-page';
+import NavBar from './pages/nav-bar';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -36,6 +37,7 @@ export default class App extends React.Component {
     return (
     <>
       {this.renderPage()}
+      <NavBar/>
     </>
     );
   }

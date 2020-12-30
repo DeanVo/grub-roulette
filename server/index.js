@@ -34,6 +34,10 @@ app.get('/api/random', (req, res) => {
     });
 });
 
+app.get('/api/random/restaurant', (req, res) => {
+  res.send(selectedRestaurant);
+});
+
 app.listen(process.env.PORT, () => {
   // eslint-disable-next-line no-console
   console.log(`express server listening on port ${process.env.PORT}`);
