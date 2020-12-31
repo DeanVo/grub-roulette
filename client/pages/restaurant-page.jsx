@@ -24,6 +24,12 @@ export default class Restaurant extends React.Component {
   render() {
     const { selectedRestaurant } = this.state;
 
+    if (!selectedRestaurant) {
+      return (
+        <Spinner />
+      );
+    }
+
     function tConv24(time24) {
       let ts = time24;
       const H = +ts.substr(0, 2);
@@ -32,12 +38,6 @@ export default class Restaurant extends React.Component {
       const ampm = H < 12 ? ' AM' : ' PM';
       ts = h + ':' + ts.substr(2, 3) + ampm;
       return ts;
-    }
-
-    if (!selectedRestaurant) {
-      return (
-      <Spinner/>
-      );
     }
 
     const zipIndex = selectedRestaurant.location.display_address.length - 1;

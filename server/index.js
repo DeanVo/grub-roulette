@@ -25,7 +25,7 @@ app.get('/api/random', (req, res) => {
     .then(data => {
       restaurantList = data.businesses;
       selectedRestaurant = restaurantList[Math.floor(Math.random() * restaurantList.length)];
-      fetch(`https://api.yelp.com/v3/businesses/${selectedRestaurant.id}`, {
+      return fetch(`https://api.yelp.com/v3/businesses/${selectedRestaurant.id}`, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: process.env.BEARER
