@@ -1,0 +1,45 @@
+.header-container {
+  font-family: 'Actor', sans-serif;
+  color: #ff4b3a;
+  text-align: center;
+}
+
+.nav-bar {
+  background-color: #ff4b3a;
+  width: 100%;
+}
+
+.home-icon,
+.heart-icon,
+.bookmark-icon,
+.history-icon {
+  font-size: 1.5rem;
+}
+
+.spinner {
+  color: #ff4b3a;
+  position: fixed;
+  top: 35%;
+  left: 50%;
+}
+
+.primary-color-font {
+  color: #ff4b3a;
+  font-family: 'Actor', sans-serif;
+}
+
+.primary-color {
+  color: #ff4b3a;
+}
+
+.primary-font {
+  font-family: 'Actor', sans-serif;
+}
+
+.text-shadow {
+  text-shadow: 2px 2px white;
+}
+
+.rated {
+  color: #ff4b3a;
+}
