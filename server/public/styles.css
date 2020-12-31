@@ -4,19 +4,6 @@
   text-align: center;
 }
 
-.header {
-  font-size: 2.5em;
-}
-
-.sub-header {
-  font-size: 1.5rem;
-}
-
-.primary-color-font {
-  color: #ff4b3a;
-  font-family: 'Actor', sans-serif;
-}
-
 .nav-bar {
   background-color: #ff4b3a;
   width: 100%;
@@ -34,6 +21,11 @@
   position: fixed;
   top: 35%;
   left: 50%;
+}
+
+.primary-color-font {
+  color: #ff4b3a;
+  font-family: 'Actor', sans-serif;
 }
 
 .primary-color {

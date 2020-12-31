@@ -14,26 +14,6 @@ let selectedRestaurant = restaurantList;
 const term = 'restaurants';
 const location = 'orange county, ca';
 
-// app.get('/api/random', (req, res) => {
-//   fetch(`https://api.yelp.com/v3/businesses/search?term=${term}&location=${location}`, {
-//     headers: {
-//       'Content-Type': 'application/json',
-//       Authorization: process.env.BEARER
-//     }
-//   })
-//     .then(res => res.json())
-//     .then(data => {
-//       restaurantList = data.businesses;
-//     })
-//     .then(() => {
-//       selectedRestaurant = restaurantList[Math.floor(Math.random() * restaurantList.length)];
-//       res.send(selectedRestaurant);
-//     })
-//     .catch(err => {
-//       console.error(err);
-//     });
-// });
-
 app.get('/api/random', (req, res) => {
   fetch(`https://api.yelp.com/v3/businesses/search?term=${term}&location=${location}`, {
     headers: {
