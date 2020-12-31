@@ -58,12 +58,11 @@ app.get('/api/random', (req, res) => {
 
           db.query(sql, params)
             .then(result => {
-              const [random] = result.rows;
-              res.status(201).json(random);
+              res.status(201).json(selectedRestaurant);
             })
             .catch(err => {
               console.error(err);
-              res.status(500).json({
+              return res.status(500).json({
                 error: 'An unexpected error occurred.'
               });
             });
