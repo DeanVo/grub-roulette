@@ -40,10 +40,14 @@
   color: #ff4b3a;
 }
 
-.green {
-  color: green;
+.primary-font {
+  font-family: 'Actor', sans-serif;
 }
 
-.red {
-  color: red;
+.text-shadow {
+  text-shadow: 2px 2px white;
+}
+
+.rated {
+  color: #ff4b3a;
 }

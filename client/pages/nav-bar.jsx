@@ -3,7 +3,7 @@ import Nav from 'react-bootstrap/Nav';
 
 export default function NavBar(props) {
   return (
-    <Nav className="nav nav-bar fixed-bottom d-flex justify-content-around text-white pt-2"
+    <Nav className="nav nav-bar fixed-bottom d-flex justify-content-around text-white pt-2 pb-5"
     style={{
       height: '7%'
     }}>
