@@ -5,7 +5,7 @@ export default function NavBar(props) {
   return (
     <Nav className="nav nav-bar fixed-bottom d-flex justify-content-around text-white pt-2 pb-5"
     style={{
-      height: '7%'
+      height: '60px'
     }}>
       <div>
         <a href={''} className="fas fa-home text-white home-icon ml-1"></a>
