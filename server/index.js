@@ -49,10 +49,10 @@ app.get('/api/random', (req, res) => {
           const address = `${selectedRestaurant.location.address1}, ${selectedRestaurant.location.city} ${selectedRestaurant.location.state} ${selectedRestaurant.location.zip_code}`;
 
           const sql = `
-        insert into "randomHistory" ("businessId", "restaurantName", "imageUrl", "rating", "totalReviews", "address", "categories", "userId")
-        values ($1, $2, $3, $4, $5, $6, $7, $8)
-        returning *
-      `;
+            insert into "randomHistory" ("businessId", "restaurantName", "imageUrl", "rating", "totalReviews", "address", "categories", "userId")
+            values ($1, $2, $3, $4, $5, $6, $7, $8)
+            returning *
+          `;
           // eslint-disable-next-line camelcase
           const params = [id, name, image_url, rating, review_count, address, categories, userId];
 
@@ -70,6 +70,24 @@ app.get('/api/random', (req, res) => {
     })
     .catch(err => {
       console.error(err);
+    });
+});
+
+app.get('/api/random/history', (req, res) => {
+  const sql = `
+    select *
+    from "randomHistory"
+  `;
+
+  db.query(sql)
+    .then(result => {
+      res.json(result.rows);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({
+        error: 'An unexpected error occurred.'
+      });
     });
 });
 
