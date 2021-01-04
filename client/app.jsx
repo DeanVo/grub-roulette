@@ -3,6 +3,7 @@ import parseRoute from './lib/parse-route';
 import Home from './pages/home';
 import Randomize from './pages/randomize';
 import Restaurant from './pages/restaurant-page';
+import History from './pages/history';
 import NavBar from './pages/nav-bar';
 
 export default class App extends React.Component {
@@ -30,6 +31,10 @@ export default class App extends React.Component {
     }
     if (route.path === '#restaurants') {
       return <Restaurant/>;
+    }
+
+    if (route.path === '#history') {
+      return <History/>;
     }
   }
 

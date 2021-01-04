@@ -20,7 +20,7 @@ export default function NavBar(props) {
         <p className="nav-bar-text">Bookmarks</p>
       </div>
       <div>
-        <a className="fas fa-history text-white ml-2 history-icon"></a>
+        <a href={'#history'} className="fas fa-history text-white ml-2 history-icon"></a>
         <p className="nav-bar-text">History</p>
       </div>
     </Nav>
