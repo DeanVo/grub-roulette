@@ -1,16 +1,58 @@
+import fetch from 'node-fetch';
 import React from 'react';
 
 export default class TopBar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isFavorited: false
+      isFavorited: false,
+      selectedRestaurant: null
     };
     this.favoriteToggle = this.favoriteToggle.bind(this);
+    this.addFavorite = this.addFavorite.bind(this);
+    this.removeFavorite = this.removeFavorite.bind(this);
   }
 
   favoriteToggle(e) {
+
     this.setState({ isFavorited: !this.state.isFavorited });
+
+    fetch('/api/random/selected')
+      .then(response => response.json())
+      .then(data => this.setState({
+        selectedRestaurant: data
+      }));
+
+    if (this.state.isFavorited === false) {
+      this.addFavorite(this.selectedRestaurant);
+    }
+
+    if (this.state.isFavorited === true) {
+      this.removeFavorite(this.state.selectedRestaurant.id);
+    }
+
+  }
+
+  addFavorite(fav) {
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(fav)
+    };
+
+    fetch('/api/random/favorite', requestOptions)
+      .then(response => response.json())
+      .catch(err => console.error(err));
+  }
+
+  removeFavorite(fav) {
+    const requestOptions = {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' }
+    };
+
+    fetch(`/api/random/favorite/${fav}`, requestOptions)
+      .catch(err => console.error(err));
   }
 
   render() {
