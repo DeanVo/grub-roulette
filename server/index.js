@@ -78,7 +78,7 @@ app.get('/api/random/selected', (req, res) => {
 });
 
 app.post('/api/random/favorite', (req, res) => {
-  // eslint-disable-next-line camelcase
+
   const { id, name, image_url, rating, review_count } = selectedRestaurant;
   const categories = selectedRestaurant.categories.map(category => category.title).join(' ');
   const userId = 1;
@@ -90,7 +90,7 @@ app.post('/api/random/favorite', (req, res) => {
             values ($1, $2, $3, $4, $5, $6, $7, $8)
             returning *
           `;
-  // eslint-disable-next-line camelcase
+
   const params = [id, name, image_url, rating, review_count, address, categories, userId];
 
   db.query(sql, params)
@@ -125,7 +125,6 @@ app.delete('/api/random/favorite/:businessId', (req, res) => {
       } else {
         res.status(204).send();
       }
-      res.status(201).json(business);
     })
     .catch(err => {
       console.error(err);

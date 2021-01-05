@@ -16,6 +16,7 @@
       "always"
     ],
     "padded-blocks": 0,
+    "camelcase":"off",
     "arrow-parens": [
       "error",
       "as-needed"

@@ -47,8 +47,7 @@ export default class TopBar extends React.Component {
 
   removeFavorite(fav) {
     const requestOptions = {
-      method: 'DELETE',
-      headers: { 'Content-Type': 'application/json' }
+      method: 'DELETE'
     };
 
     fetch(`/api/random/favorite/${fav}`, requestOptions)
