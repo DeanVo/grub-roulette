@@ -5,6 +5,7 @@ import Randomize from './pages/randomize';
 import Restaurant from './pages/restaurant-page';
 import History from './pages/history';
 import NavBar from './pages/nav-bar';
+import TopBar from './pages/top-bar';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -30,7 +31,7 @@ export default class App extends React.Component {
       </>;
     }
     if (route.path === '#restaurants') {
-      return <Restaurant/>;
+      return <><TopBar/><Restaurant/></>;
     }
 
     if (route.path === '#history') {

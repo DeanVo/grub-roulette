@@ -73,6 +73,65 @@ app.get('/api/random', (req, res) => {
     });
 });
 
+app.get('/api/random/selected', (req, res) => {
+  res.status(201).json(selectedRestaurant);
+});
+
+app.post('/api/random/favorite', (req, res) => {
+
+  const { id, name, image_url, rating, review_count } = selectedRestaurant;
+  const categories = selectedRestaurant.categories.map(category => category.title).join(' ');
+  const userId = 1;
+
+  const address = `${selectedRestaurant.location.address1}, ${selectedRestaurant.location.city} ${selectedRestaurant.location.state} ${selectedRestaurant.location.zip_code}`;
+
+  const sql = `
+            insert into "favorites" ("businessId", "restaurantName", "imageUrl", "rating", "totalReviews", "address", "categories", "userId")
+            values ($1, $2, $3, $4, $5, $6, $7, $8)
+            returning *
+          `;
+
+  const params = [id, name, image_url, rating, review_count, address, categories, userId];
+
+  db.query(sql, params)
+    .then(result => {
+      res.status(201).json(selectedRestaurant);
+    })
+    .catch(err => {
+      console.error(err);
+      return res.status(500).json({
+        error: 'An unexpected error occurred.'
+      });
+    });
+});
+
+app.delete('/api/random/favorite/:businessId', (req, res) => {
+  const businessId = req.params.businessId;
+
+  const sql = `
+    delete from "favorites"
+      where "businessId" = $1
+    returning *
+  `;
+
+  const params = [businessId];
+
+  db.query(sql, params)
+    .then(result => {
+      const business = result.rows[0];
+
+      if (!business) {
+        res.status(404).json({ error: `id ${businessId} does not exist.` });
+      } else {
+        res.status(204).send();
+      }
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({ error: 'An unexpected error occurred.' });
+    });
+});
+
 app.get('/api/random/history', (req, res) => {
   const sql = `
     select *

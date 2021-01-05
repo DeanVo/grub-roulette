@@ -98,6 +98,21 @@ CREATE TABLE "users" (
 
 
 
+CREATE TABLE "favorites" (
+	"businessId" TEXT NOT NULL,
+	"userId" int NOT NULL,
+	"restaurantName" TEXT NOT NULL,
+	"imageUrl" TEXT NOT NULL,
+	"rating" numeric NOT NULL,
+	"totalReviews" int NOT NULL,
+	"address" TEXT NOT NULL,
+	"categories" TEXT NOT NULL
+) WITH (
+  OIDS=FALSE
+);
+
+
+
 ALTER TABLE "restaurants" ADD CONSTRAINT "restaurants_fk0" FOREIGN KEY ("categoryId") REFERENCES "categories"("categoryId");
 ALTER TABLE "restaurants" ADD CONSTRAINT "restaurants_fk1" FOREIGN KEY ("ratingId") REFERENCES "rating"("ratingId");
 
@@ -106,3 +121,8 @@ ALTER TABLE "restaurants" ADD CONSTRAINT "restaurants_fk1" FOREIGN KEY ("ratingI
 
 ALTER TABLE "randomHistory" ADD CONSTRAINT "randomHistory_fk0" FOREIGN KEY ("businessId") REFERENCES "restaurants"("businessId");
 ALTER TABLE "randomHistory" ADD CONSTRAINT "randomHistory_fk1" FOREIGN KEY ("userId") REFERENCES "users"("userId");
+
+
+
+ALTER TABLE "favorites" ADD CONSTRAINT "favorites_fk0" FOREIGN KEY ("businessId") REFERENCES "restaurants"("businessId");
+ALTER TABLE "favorites" ADD CONSTRAINT "favorites_fk1" FOREIGN KEY ("userId") REFERENCES "users"("userId");
