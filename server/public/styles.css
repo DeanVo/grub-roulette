@@ -40,6 +40,10 @@
   text-shadow: 2px 2px white;
 }
 
+.green {
+  color: green;
+}
+
 .rated {
   color: #ff4b3a;
 }

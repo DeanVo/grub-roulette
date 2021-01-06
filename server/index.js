@@ -105,6 +105,72 @@ app.post('/api/random/favorite', (req, res) => {
     });
 });
 
+let restaurantListByLocation = [];
+
+app.get('/api/random/location', (req, res) => {
+  const { userLocation } = req.query;
+
+  if (!userLocation) {
+    res.status(400).json({
+      error: 'userLocation value is required.'
+    });
+  }
+
+  fetch(`https://api.yelp.com/v3/businesses/search?term=${term}&location=${userLocation}&limit=50`, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: process.env.BEARER
+    }
+  })
+    .then(res => res.json())
+    .then(data => {
+      restaurantListByLocation = data.businesses;
+      selectedRestaurant = restaurantListByLocation[Math.floor(Math.random() * restaurantListByLocation.length)];
+
+      return fetch(`https://api.yelp.com/v3/businesses/${selectedRestaurant.id}`, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: process.env.BEARER
+        }
+      })
+        .then(res => res.json())
+        .then(data => {
+          selectedRestaurant.hours = data.hours[0];
+
+          const { id, name, image_url, rating, review_count } = selectedRestaurant;
+          const categories = selectedRestaurant.categories.map(category => category.title).join(' ');
+          const userId = 1;
+
+          const address = `${selectedRestaurant.location.address1}, ${selectedRestaurant.location.city} ${selectedRestaurant.location.state} ${selectedRestaurant.location.zip_code}`;
+
+          const sql = `
+            insert into "randomHistory" ("businessId", "restaurantName", "imageUrl", "rating", "totalReviews", "address", "categories", "userId")
+            values ($1, $2, $3, $4, $5, $6, $7, $8)
+            returning *
+          `;
+
+          const params = [id, name, image_url, rating, review_count, address, categories, userId];
+
+          db.query(sql, params)
+            .then(result => {
+              res.status(201).json(selectedRestaurant);
+            })
+            .catch(err => {
+              console.error(err);
+              return res.status(500).json({
+                error: 'An unexpected error occurred.'
+              });
+            });
+        });
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({
+        error: 'An unexpected error occurred.'
+      });
+    });
+});
+
 app.delete('/api/random/favorite/:businessId', (req, res) => {
   const businessId = req.params.businessId;
 

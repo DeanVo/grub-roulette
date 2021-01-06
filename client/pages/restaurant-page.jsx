@@ -14,7 +14,7 @@ export default class Restaurant extends React.Component {
   }
 
   componentDidMount() {
-    fetch('/api/random')
+    fetch('/api/random/selected')
       .then(response => response.json())
       .then(data => this.setState({
         selectedRestaurant: data
