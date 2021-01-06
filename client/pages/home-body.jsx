@@ -11,7 +11,8 @@ export default class HomeBody extends React.Component {
     super(props);
     this.state = {
       search: '',
-      selectedRestaurant: null
+      selectedRestaurant: null,
+      isLoading: false
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -26,10 +27,13 @@ export default class HomeBody extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
 
+    this.setState({ isLoading: true });
+
     fetch('/api/random/location?userLocation=' + this.state.search)
       .then(response => response.json())
       .then(data => this.setState({
-        selectedRestaurant: data
+        selectedRestaurant: data,
+        isLoading: false
       }));
   }
 
@@ -59,20 +63,20 @@ export default class HomeBody extends React.Component {
     let message = '';
     let eatButton;
 
-    if (value !== '') {
+    if (this.state.isLoading === true) {
       message = <>
-        <div className="spinner-border text-danger" role="status">
+      <Container className='d-flex justify-content-center'>
+        <div className="spinner-border text-danger d-flex justify-content-center mt-2" role="status">
           <span className="sr-only">Loading...</span>
         </div>
+       </Container>
       </>;
-    }
-
-    if (value === '') {
-      message = <p className='primary-color-font'>Please submit an address.</p>;
+    } else {
+      message = <p className='primary-color-font mx-4'>Please submit an address.</p>;
     }
 
     if (this.state.selectedRestaurant !== null) {
-      message = <p className='primary-color-font'>Restaurant found around {value}!</p >;
+      message = <p className='primary-color-font mx-4'>Restaurant found around {value}!</p >;
       eatButton = <Button href={'#restaurants'} className="btn btn-primary" style={rouletteButtons} onClick={this.handleRandomizer}>{'Let\'s eat!'}</Button>;
     }
 
@@ -83,7 +87,7 @@ export default class HomeBody extends React.Component {
     return (
     <>
     <Container className='px-0'>
-    <form onSubmit={this.handleSubmit}>
+    <form className='mx-4' onSubmit={this.handleSubmit}>
       <InputGroup className="mb-1 location-bar" style={searchBarStyle}>
         <FormControl
           required

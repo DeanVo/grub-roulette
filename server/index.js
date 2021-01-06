@@ -15,11 +15,12 @@ app.use(staticMiddleware);
 app.use(express.json());
 
 let restaurantList = [];
+let restaurantListByLocation = [];
 let selectedRestaurant = restaurantList;
 const term = 'restaurants';
 const location = 'orange county, ca';
 
-app.get('/api/random', (req, res) => {
+app.get('/api/random', (req, res, next) => {
   fetch(`https://api.yelp.com/v3/businesses/search?term=${term}&location=${location}&limit=50`, {
     headers: {
       'Content-Type': 'application/json',
@@ -41,7 +42,6 @@ app.get('/api/random', (req, res) => {
         .then(data => {
           selectedRestaurant.hours = data.hours[0];
 
-          // eslint-disable-next-line camelcase
           const { id, name, image_url, rating, review_count } = selectedRestaurant;
           const categories = selectedRestaurant.categories.map(category => category.title).join(' ');
           const userId = 1;
@@ -53,31 +53,24 @@ app.get('/api/random', (req, res) => {
             values ($1, $2, $3, $4, $5, $6, $7, $8)
             returning *
           `;
-          // eslint-disable-next-line camelcase
+
           const params = [id, name, image_url, rating, review_count, address, categories, userId];
 
           db.query(sql, params)
             .then(result => {
               res.status(201).json(selectedRestaurant);
             })
-            .catch(err => {
-              console.error(err);
-              return res.status(500).json({
-                error: 'An unexpected error occurred.'
-              });
-            });
+            .catch(err => next(err));
         });
     })
-    .catch(err => {
-      console.error(err);
-    });
+    .catch(err => next(err));
 });
 
 app.get('/api/random/selected', (req, res) => {
   res.status(201).json(selectedRestaurant);
 });
 
-app.post('/api/random/favorite', (req, res) => {
+app.post('/api/random/favorite', (req, res, next) => {
 
   const { id, name, image_url, rating, review_count } = selectedRestaurant;
   const categories = selectedRestaurant.categories.map(category => category.title).join(' ');
@@ -97,17 +90,10 @@ app.post('/api/random/favorite', (req, res) => {
     .then(result => {
       res.status(201).json(selectedRestaurant);
     })
-    .catch(err => {
-      console.error(err);
-      return res.status(500).json({
-        error: 'An unexpected error occurred.'
-      });
-    });
+    .catch(err => next(err));
 });
 
-let restaurantListByLocation = [];
-
-app.get('/api/random/location', (req, res) => {
+app.get('/api/random/location', (req, res, next) => {
   const { userLocation } = req.query;
 
   if (!userLocation) {
@@ -155,23 +141,13 @@ app.get('/api/random/location', (req, res) => {
             .then(result => {
               res.status(201).json(selectedRestaurant);
             })
-            .catch(err => {
-              console.error(err);
-              return res.status(500).json({
-                error: 'An unexpected error occurred.'
-              });
-            });
+            .catch(err => next(err));
         });
     })
-    .catch(err => {
-      console.error(err);
-      res.status(500).json({
-        error: 'An unexpected error occurred.'
-      });
-    });
+    .catch(err => next(err));
 });
 
-app.delete('/api/random/favorite/:businessId', (req, res) => {
+app.delete('/api/random/favorite/:businessId', (req, res, next) => {
   const businessId = req.params.businessId;
 
   const sql = `
@@ -192,13 +168,10 @@ app.delete('/api/random/favorite/:businessId', (req, res) => {
         res.status(204).send();
       }
     })
-    .catch(err => {
-      console.error(err);
-      res.status(500).json({ error: 'An unexpected error occurred.' });
-    });
+    .catch(err => next(err));
 });
 
-app.get('/api/random/history', (req, res) => {
+app.get('/api/random/history', (req, res, next) => {
   const sql = `
     select *
     from "randomHistory"
@@ -208,12 +181,7 @@ app.get('/api/random/history', (req, res) => {
     .then(result => {
       res.json(result.rows);
     })
-    .catch(err => {
-      console.error(err);
-      res.status(500).json({
-        error: 'An unexpected error occurred.'
-      });
-    });
+    .catch(err => next(err));
 });
 
 app.listen(process.env.PORT, () => {
