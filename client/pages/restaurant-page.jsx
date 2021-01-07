@@ -4,8 +4,9 @@ import fetch from 'node-fetch';
 import Spinner from './spinner';
 import Row from 'react-bootstrap/Row';
 import Column from 'react-bootstrap/Col';
+import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
 
-export default class Restaurant extends React.Component {
+export class Restaurant extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -23,7 +24,11 @@ export default class Restaurant extends React.Component {
 
   render() {
     const { selectedRestaurant } = this.state;
-
+    const mapStyles = {
+      position: 'relative',
+      width: '100%',
+      height: '250px'
+    };
     if (!selectedRestaurant) {
       return (
         <Spinner />
@@ -105,7 +110,21 @@ export default class Restaurant extends React.Component {
             </Column>
           </Row>
         </Container>
+        <Container className='margin-bottom'>
+          <Map
+            google={this.props.google}
+            zoom={16}
+            containerStyle={mapStyles}
+            initialCenter={{ lat: selectedRestaurant.coordinates.latitude, lng: selectedRestaurant.coordinates.longitude }}
+          >
+          <Marker position={{ lat: selectedRestaurant.coordinates.latitude, lng: selectedRestaurant.coordinates.longitude }}/>
+          </Map>
+        </Container>
       </>
     );
   }
 }
+
+export default GoogleApiWrapper({
+  apiKey: 'AIzaSyDO9ffp40JiHFSoD24EwMWzeg8sEXDg15M'
+})(Restaurant);
