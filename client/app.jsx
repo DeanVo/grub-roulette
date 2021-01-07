@@ -1,11 +1,11 @@
 import React from 'react';
 import parseRoute from './lib/parse-route';
 import Home from './pages/home';
-import Randomize from './pages/randomize';
 import Restaurant from './pages/restaurant-page';
 import History from './pages/history';
 import NavBar from './pages/nav-bar';
 import TopBar from './pages/top-bar';
+import HomeBody from './pages/home-body';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -27,7 +27,7 @@ export default class App extends React.Component {
     const { route } = this.state;
     if (route.path === '') {
       return <>
-      <Home/><Randomize/>
+        <Home /><HomeBody/>
       </>;
     }
     if (route.path === '#restaurants') {
