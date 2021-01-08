@@ -119,7 +119,8 @@ export class Restaurant extends React.Component {
             containerStyle={mapStyles}
             initialCenter={{ lat: selectedRestaurant.coordinates.latitude, lng: selectedRestaurant.coordinates.longitude }}
           >
-          <Marker position={{ lat: this.props.lat, lng: this.props.lng }}/>
+          <Marker position={{ lat: this.props.lat, lng: this.props.lng }}>
+          </Marker>
           <Marker position={{ lat: selectedRestaurant.coordinates.latitude, lng: selectedRestaurant.coordinates.longitude }}/>
           </Map>
         </Container>
