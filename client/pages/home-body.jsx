@@ -75,10 +75,6 @@ export class HomeBody extends React.Component {
       message = <p className='primary-color-font mx-4'>Please submit an address.</p>;
     }
 
-    if (this.state.selectedRestaurant !== null) {
-      message = <p className='primary-color-font mx-4'>Restaurant found around {value}!</p >;
-    }
-
     if (this.props.lat === null && this.props.lng === null) {
       locationMessage = <p className='d-flex justify-content-center' style={{ fontSize: '.8rem' }}>Please allow access to location in the browser to track distance from restaurant.</p>;
     }

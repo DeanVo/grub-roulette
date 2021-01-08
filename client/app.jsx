@@ -36,7 +36,7 @@ export default class App extends React.Component {
     const { route } = this.state;
     if (route.path === '') {
       return <>
-        <Home /><HomeBody handler={this.state.route} lat={this.state.userLat} lng={this.state.userLong}/>
+        <Home /><HomeBody lat={this.state.userLat} lng={this.state.userLong}/>
       </>;
     }
     if (route.path === '#restaurants') {
