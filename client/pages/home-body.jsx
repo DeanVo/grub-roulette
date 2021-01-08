@@ -4,9 +4,9 @@ import FormControl from 'react-bootstrap/FormControl';
 import Button from 'react-bootstrap/Button';
 import { Container } from 'react-bootstrap';
 import fetch from 'node-fetch';
-import Row from 'react-bootstrap/Row';
+import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
 
-export default class HomeBody extends React.Component {
+export class HomeBody extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -31,10 +31,14 @@ export default class HomeBody extends React.Component {
 
     fetch('/api/random/location?userLocation=' + this.state.search)
       .then(response => response.json())
-      .then(data => this.setState({
-        selectedRestaurant: data,
-        isLoading: false
-      }));
+      .then(data => {
+        this.setState({
+          selectedRestaurant: data,
+          isLoading: false
+        });
+        window.location.hash = '#restaurants';
+      });
+
   }
 
   render() {
@@ -48,20 +52,16 @@ export default class HomeBody extends React.Component {
       color: '#FF4B3A',
       border: '1px solid #FF4B3A'
     };
-    const rouletteButtons = {
-      width: '75%',
-      fontSize: '1.5rem',
-      marginTop: '1rem',
-      color: '#FF4B3A',
-      border: '1px solid #FF4B3A',
-      borderRadius: '.25rem',
-      backgroundColor: 'white'
+    const mapStyles = {
+      position: 'relative',
+      width: '100%',
+      height: '320px'
     };
 
     const value = this.state.search;
 
     let message = '';
-    let eatButton;
+    let locationMessage = '';
 
     if (this.state.isLoading === true) {
       message = <>
@@ -75,13 +75,8 @@ export default class HomeBody extends React.Component {
       message = <p className='primary-color-font mx-4'>Please submit an address.</p>;
     }
 
-    if (this.state.selectedRestaurant !== null) {
-      message = <p className='primary-color-font mx-4'>Restaurant found around {value}!</p >;
-      eatButton = <Button href={'#restaurants'} className="btn btn-primary" style={rouletteButtons} onClick={this.handleRandomizer}>{'Let\'s eat!'}</Button>;
-    }
-
-    if (this.state.selectedRestaurant === null) {
-      eatButton = <Button disabled href={'#restaurants'} className="btn btn-primary" style={rouletteButtons} onClick={this.handleRandomizer}>{'Let\'s eat!'}</Button>;
+    if (this.props.lat === null && this.props.lng === null) {
+      locationMessage = <p className='d-flex justify-content-center' style={{ fontSize: '.8rem' }}>Please allow access to location in the browser to track distance from restaurant.</p>;
     }
 
     return (
@@ -105,12 +100,24 @@ export default class HomeBody extends React.Component {
     </form>
     {message}
           <Container>
-            <Row className='justify-content-center'>
-              {eatButton}
-            </Row>
+            <h2 className='d-flex justify-content-center my-3'>Current Location</h2>
+            {locationMessage}
+            <Map
+              google={this.props.google}
+              zoom={14}
+              containerStyle={mapStyles}
+              initialCenter={{ lat: this.props.lat, lng: this.props.lng }}
+            >
+              <Marker position={{ lat: this.props.lat, lng: this.props.lng }} />
+
+            </Map>
           </Container>
       </Container>
     </>
     );
   }
 }
+
+export default GoogleApiWrapper({
+  apiKey: process.env.MAPS_KEY
+})(HomeBody);

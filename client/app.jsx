@@ -11,7 +11,9 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      route: parseRoute(window.location.hash)
+      route: parseRoute(window.location.hash),
+      userLat: null,
+      userLong: null
     };
   }
 
@@ -21,17 +23,24 @@ export default class App extends React.Component {
         route: parseRoute(window.location.hash)
       });
     });
+
+    navigator.geolocation.getCurrentPosition(position => {
+      this.setState({
+        userLat: position.coords.latitude,
+        userLong: position.coords.longitude
+      });
+    });
   }
 
   renderPage() {
     const { route } = this.state;
     if (route.path === '') {
       return <>
-        <Home /><HomeBody/>
+        <Home /><HomeBody lat={this.state.userLat} lng={this.state.userLong}/>
       </>;
     }
     if (route.path === '#restaurants') {
-      return <><TopBar/><Restaurant/></>;
+      return <><TopBar /><Restaurant lat={this.state.userLat} lng={this.state.userLong}/></>;
     }
 
     if (route.path === '#history') {
@@ -40,6 +49,7 @@ export default class App extends React.Component {
   }
 
   render() {
+
     return (
     <>
       {this.renderPage()}
