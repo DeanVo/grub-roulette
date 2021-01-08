@@ -20,14 +20,16 @@ export class Restaurant extends React.Component {
       .then(data => this.setState({
         selectedRestaurant: data
       }));
+
   }
 
   render() {
+
     const { selectedRestaurant } = this.state;
     const mapStyles = {
       position: 'relative',
       width: '100%',
-      height: '250px'
+      height: '320px'
     };
     if (!selectedRestaurant) {
       return (
@@ -113,10 +115,11 @@ export class Restaurant extends React.Component {
         <Container className='margin-bottom'>
           <Map
             google={this.props.google}
-            zoom={16}
+            zoom={14}
             containerStyle={mapStyles}
             initialCenter={{ lat: selectedRestaurant.coordinates.latitude, lng: selectedRestaurant.coordinates.longitude }}
           >
+          <Marker position={{ lat: this.props.lat, lng: this.props.lng }}/>
           <Marker position={{ lat: selectedRestaurant.coordinates.latitude, lng: selectedRestaurant.coordinates.longitude }}/>
           </Map>
         </Container>
@@ -126,5 +129,5 @@ export class Restaurant extends React.Component {
 }
 
 export default GoogleApiWrapper({
-  apiKey: 'AIzaSyDO9ffp40JiHFSoD24EwMWzeg8sEXDg15M'
+  apiKey: process.env.MAPS_KEY
 })(Restaurant);

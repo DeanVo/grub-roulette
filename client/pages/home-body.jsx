@@ -5,8 +5,9 @@ import Button from 'react-bootstrap/Button';
 import { Container } from 'react-bootstrap';
 import fetch from 'node-fetch';
 import Row from 'react-bootstrap/Row';
+import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
 
-export default class HomeBody extends React.Component {
+export class HomeBody extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -35,6 +36,7 @@ export default class HomeBody extends React.Component {
         selectedRestaurant: data,
         isLoading: false
       }));
+
   }
 
   render() {
@@ -57,10 +59,16 @@ export default class HomeBody extends React.Component {
       borderRadius: '.25rem',
       backgroundColor: 'white'
     };
+    const mapStyles = {
+      position: 'relative',
+      width: '100%',
+      height: '320px'
+    };
 
     const value = this.state.search;
 
     let message = '';
+    let locationMessage = '';
     let eatButton;
 
     if (this.state.isLoading === true) {
@@ -82,6 +90,10 @@ export default class HomeBody extends React.Component {
 
     if (this.state.selectedRestaurant === null) {
       eatButton = <Button disabled href={'#restaurants'} className="btn btn-primary" style={rouletteButtons} onClick={this.handleRandomizer}>{'Let\'s eat!'}</Button>;
+    }
+
+    if (this.props.lat === null && this.props.lng === null) {
+      locationMessage = <p className='d-flex justify-content-center' style={{ fontSize: '.8rem' }}>Please allow access to location in the browser to track distance from restaurant.</p>;
     }
 
     return (
@@ -108,9 +120,23 @@ export default class HomeBody extends React.Component {
             <Row className='justify-content-center'>
               {eatButton}
             </Row>
+            <h2 className='d-flex justify-content-center my-3'>Current Location</h2>
+            {locationMessage}
+            <Map
+              google={this.props.google}
+              zoom={14}
+              containerStyle={mapStyles}
+              initialCenter={{ lat: this.props.lat, lng: this.props.lng }}
+            >
+              <Marker position={{ lat: this.props.lat, lng: this.props.lng }} />
+            </Map>
           </Container>
       </Container>
     </>
     );
   }
 }
+
+export default GoogleApiWrapper({
+  apiKey: process.env.MAPS_KEY
+})(HomeBody);
