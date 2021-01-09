@@ -60,12 +60,14 @@ export default class History extends React.Component {
     if (listHistory.length === 0) {
       listHistory = 'No history to show. Let\'s eat soon!';
       noHistory = 'primary-color-font text-center';
+    } else {
+      listHistory = listHistory.reverse();
     }
 
     return (
       <>
         <h1 className='primary-color-font text-center'>Roulette History</h1>
-        <ul className={`mb-5 pl-0 ${noHistory} flex-column-reverse`} >{listHistory.reverse()}</ul>
+        <ul className={`mb-5 pl-0 ${noHistory} flex-column-reverse`} >{listHistory}</ul>
       </>
     );
   }
