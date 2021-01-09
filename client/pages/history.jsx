@@ -65,7 +65,7 @@ export default class History extends React.Component {
     return (
       <>
         <h1 className='primary-color-font text-center'>Roulette History</h1>
-        <ul className={`mb-5 pl-0 ${noHistory}`} >{listHistory}</ul>
+        <ul className={`mb-5 pl-0 ${noHistory} flex-column-reverse`} >{listHistory.reverse()}</ul>
       </>
     );
   }

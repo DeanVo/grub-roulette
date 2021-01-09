@@ -65,7 +65,12 @@ export class Restaurant extends React.Component {
       return deg * (Math.PI / 180);
     }
 
-    const distance = getDistanceInMiles(this.props.lat, this.props.lng, selectedRestaurant.coordinates.latitude, selectedRestaurant.coordinates.longitude).toFixed(2);
+    let distance;
+    if (this.props.lat !== null && this.props.lng !== null) {
+      distance = `${getDistanceInMiles(this.props.lat, this.props.lng, selectedRestaurant.coordinates.latitude, selectedRestaurant.coordinates.longitude).toFixed(2)} miles`;
+    } else {
+      distance = 'User location not enabled. Please allow access in the browser.';
+    }
 
     const zipIndex = selectedRestaurant.location.display_address.length - 1;
     const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
@@ -120,7 +125,7 @@ export class Restaurant extends React.Component {
             <h3 className='mt-3'>{selectedRestaurant.name}</h3>
             <p className='mt-4 mb-0'>{selectedRestaurant.location.address1}</p>
             <p className='mb-0'>{selectedRestaurant.location.display_address[zipIndex]}</p>
-            <p className='mt-4'>{`${distance} miles`}</p>
+            <p className='mt-4'>{distance}</p>
             </Column>
             <Column className='border border-danger rounded mt-4 ml-3 shadow' style={{ fontSize: '.9rem' }}>
               <p className='mt-3 mb-1'>{hoursByDay[0].day} <span className='float-right'>{hoursByDay[0].hours}</span></p>
