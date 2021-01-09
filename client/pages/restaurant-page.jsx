@@ -47,6 +47,26 @@ export class Restaurant extends React.Component {
       return ts;
     }
 
+    function getDistanceInMiles(lat1, lon1, lat2, lon2) {
+      const R = 6371;
+      const dLat = deg2rad(lat2 - lat1);
+      const dLon = deg2rad(lon2 - lon1);
+      const a =
+        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
+        Math.sin(dLon / 2) * Math.sin(dLon / 2)
+        ;
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+      const d = R * c;
+      return d / 1.609;
+    }
+
+    function deg2rad(deg) {
+      return deg * (Math.PI / 180);
+    }
+
+    const distance = getDistanceInMiles(this.props.lat, this.props.lng, selectedRestaurant.coordinates.latitude, selectedRestaurant.coordinates.longitude).toFixed(2);
+
     const zipIndex = selectedRestaurant.location.display_address.length - 1;
     const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
@@ -98,8 +118,9 @@ export class Restaurant extends React.Component {
           <Row className='border-top border-danger primary-font' style={{ marginBottom: '4rem' }}>
             <Column className='border border-danger rounded mt-4 mr-3 shadow'>
             <h3 className='mt-3'>{selectedRestaurant.name}</h3>
-            <p className='mb-0'>{selectedRestaurant.location.address1}</p>
+            <p className='mt-4 mb-0'>{selectedRestaurant.location.address1}</p>
             <p className='mb-0'>{selectedRestaurant.location.display_address[zipIndex]}</p>
+            <p className='mt-4'>{`${distance} miles`}</p>
             </Column>
             <Column className='border border-danger rounded mt-4 ml-3 shadow' style={{ fontSize: '.9rem' }}>
               <p className='mt-3 mb-1'>{hoursByDay[0].day} <span className='float-right'>{hoursByDay[0].hours}</span></p>
