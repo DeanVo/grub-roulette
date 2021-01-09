@@ -66,10 +66,12 @@ export class Restaurant extends React.Component {
     }
 
     let distance;
+    let distanceIcon;
     if (this.props.lat !== null && this.props.lng !== null) {
       distance = `${getDistanceInMiles(this.props.lat, this.props.lng, selectedRestaurant.coordinates.latitude, selectedRestaurant.coordinates.longitude).toFixed(2)} miles`;
+      distanceIcon = <i className="fas fa-location-arrow mr-2" style={{ fontSize: '1.1rem' }}></i>;
     } else {
-      distance = 'User location not enabled. Please allow access in the browser.';
+      distance = 'User location not enabled. Please allow access in the browser to view distance in miles.';
     }
 
     const zipIndex = selectedRestaurant.location.display_address.length - 1;
@@ -125,7 +127,7 @@ export class Restaurant extends React.Component {
             <h3 className='mt-3'>{selectedRestaurant.name}</h3>
             <p className='mt-4 mb-0'>{selectedRestaurant.location.address1}</p>
             <p className='mb-0'>{selectedRestaurant.location.display_address[zipIndex]}</p>
-            <p className='mt-4'>{distance}</p>
+            <p className='mt-4'>{distanceIcon}{distance}</p>
             </Column>
             <Column className='border border-danger rounded mt-4 ml-3 shadow' style={{ fontSize: '.9rem' }}>
               <p className='mt-3 mb-1'>{hoursByDay[0].day} <span className='float-right'>{hoursByDay[0].hours}</span></p>

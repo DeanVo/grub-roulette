@@ -72,6 +72,8 @@ CREATE TABLE "randomHistory" (
 	"totalReviews" int NOT NULL,
 	"address" TEXT NOT NULL,
 	"categories" TEXT NOT NULL,
+	"latitude" DECIMAL NOT NULL,
+	"longitude" DECIMAL NOT NULL,
 	CONSTRAINT "randomHistory_pk" PRIMARY KEY ("businessId")
 ) WITH (
   OIDS=FALSE

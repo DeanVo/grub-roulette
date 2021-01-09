@@ -44,7 +44,7 @@ export default class App extends React.Component {
     }
 
     if (route.path === '#history') {
-      return <History/>;
+      return <History lat={this.state.userLat} lng={this.state.userLong}/>;
     }
   }
 
