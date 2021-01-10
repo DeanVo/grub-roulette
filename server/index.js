@@ -129,7 +129,7 @@ app.get('/api/random/location', (req, res, next) => {
           const { id, name, image_url, rating, review_count } = selectedRestaurant;
           const coordinates = selectedRestaurant.coordinates;
           const { latitude, longitude } = coordinates;
-          const categories = selectedRestaurant.categories.map(category => category.title).join(' ');
+          const categories = selectedRestaurant.categories.map(category => category.title).join(', ');
           const userId = 1;
 
           const address = `${selectedRestaurant.location.address1}, ${selectedRestaurant.location.city} ${selectedRestaurant.location.state} ${selectedRestaurant.location.zip_code}`;
