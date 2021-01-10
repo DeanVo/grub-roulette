@@ -127,18 +127,20 @@ app.get('/api/random/location', (req, res, next) => {
           selectedRestaurant.hours = data.hours[0];
 
           const { id, name, image_url, rating, review_count } = selectedRestaurant;
+          const coordinates = selectedRestaurant.coordinates;
+          const { latitude, longitude } = coordinates;
           const categories = selectedRestaurant.categories.map(category => category.title).join(' ');
           const userId = 1;
 
           const address = `${selectedRestaurant.location.address1}, ${selectedRestaurant.location.city} ${selectedRestaurant.location.state} ${selectedRestaurant.location.zip_code}`;
 
           const sql = `
-            insert into "randomHistory" ("businessId", "restaurantName", "imageUrl", "rating", "totalReviews", "address", "categories", "userId")
-            values ($1, $2, $3, $4, $5, $6, $7, $8)
+            insert into "randomHistory" ("businessId", "restaurantName", "imageUrl", "rating", "totalReviews", "address", "categories", "userId", "latitude", "longitude")
+            values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
             returning *
           `;
 
-          const params = [id, name, image_url, rating, review_count, address, categories, userId];
+          const params = [id, name, image_url, rating, review_count, address, categories, userId, latitude, longitude];
 
           db.query(sql, params)
             .then(result => {
