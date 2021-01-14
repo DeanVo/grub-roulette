@@ -130,13 +130,13 @@ export class Restaurant extends React.Component {
             <p className='mt-4'>{distanceIcon}{distance}</p>
             </Column>
             <Column className='border border-danger rounded mt-4 shadow hours' style={{ fontSize: '.9rem', maxWidth: 'fit-content' }}>
-              <p className='mt-3 mb-1'>{hoursByDay[0].day} <span className='float-right ml-3  text-nowrap'>{hoursByDay[0].hours}</span></p>
-              <p className='my-1'>{hoursByDay[1].day} <span className='float-right ml-3  text-nowrap'>{hoursByDay[1].hours}</span></p>
-              <p className='my-1'>{hoursByDay[2].day} <span className='float-right ml-3  text-nowrap'>{hoursByDay[2].hours}</span></p>
-              <p className='my-1'>{hoursByDay[3].day} <span className='float-right ml-3  text-nowrap'>{hoursByDay[3].hours}</span></p>
-              <p className='my-1'>{hoursByDay[4].day} <span className='float-right ml-3  text-nowrap'>{hoursByDay[4].hours}</span></p>
-              <p className='my-1'>{hoursByDay[5].day} <span className='float-right ml-3  text-nowrap'>{hoursByDay[5].hours}</span></p>
-              <p className='mt-1 mb-3'>{hoursByDay[6].day} <span className='float-right ml-3  text-nowrap'>{hoursByDay[6].hours}</span></p>
+              <p className='mt-3 mb-1'>{hoursByDay[0].day} <span className='float-right ml-3'>{hoursByDay[0].hours}</span></p>
+              <p className='my-1'>{hoursByDay[1].day} <span className='float-right ml-3'>{hoursByDay[1].hours}</span></p>
+              <p className='my-1'>{hoursByDay[2].day} <span className='float-right ml-3'>{hoursByDay[2].hours}</span></p>
+              <p className='my-1'>{hoursByDay[3].day} <span className='float-right ml-3'>{hoursByDay[3].hours}</span></p>
+              <p className='my-1'>{hoursByDay[4].day} <span className='float-right ml-3'>{hoursByDay[4].hours}</span></p>
+              <p className='my-1'>{hoursByDay[5].day} <span className='float-right ml-3'>{hoursByDay[5].hours}</span></p>
+              <p className='mt-1 mb-3'>{hoursByDay[6].day} <span className='float-right ml-3'>{hoursByDay[6].hours}</span></p>
             </Column>
           </Row>
         </Container>
