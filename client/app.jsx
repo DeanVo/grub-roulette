@@ -4,7 +4,6 @@ import Home from './pages/home';
 import Restaurant from './pages/restaurant-page';
 import History from './pages/history';
 import NavBar from './pages/nav-bar';
-import TopBar from './pages/top-bar';
 import HomeBody from './pages/home-body';
 
 export default class App extends React.Component {
@@ -40,7 +39,7 @@ export default class App extends React.Component {
       </>;
     }
     if (route.path === '#restaurants') {
-      return <><TopBar /><Restaurant lat={this.state.userLat} lng={this.state.userLong}/></>;
+      return <><Restaurant lat={this.state.userLat} lng={this.state.userLong}/></>;
     }
 
     if (route.path === '#history') {
