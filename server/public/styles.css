@@ -51,3 +51,9 @@
 .margin-bottom {
   margin-bottom: 5rem;
 }
+
+@media screen and (max-width: 483px) {
+  .hours {
+    white-space: nowrap;
+  }
+}
