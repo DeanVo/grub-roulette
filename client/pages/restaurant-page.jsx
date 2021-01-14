@@ -111,7 +111,7 @@ export class Restaurant extends React.Component {
           backgroundSize: 'cover',
           backgroundRepeat: 'no-repeat'
         }} className='d-flex flex-column-reverse shadow'>
-          <Container>
+          <Container className='ml-0 mb-2' style={{ maxWidth: 'fit-content', backgroundColor: 'rgba(0, 0, 0, .5)', borderRadius: '10px' }}>
           <h3 className='d-flex primary-color-font text-nowrap mb-0 text-shadow'>{selectedRestaurant.name}</h3>
             <div>{stars}</div>
             <p className='d-flex primary-color-font text-nowrap flex-column-reverse mb-0'>{`${selectedRestaurant.review_count} Reviews`}</p>
