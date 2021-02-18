@@ -16,6 +16,10 @@
   font-size: 1.5rem;
 }
 
+.icon-text {
+  font-size: 1rem;
+}
+
 .spinner {
   color: #ff4b3a;
   position: fixed;

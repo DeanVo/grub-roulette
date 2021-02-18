@@ -8,12 +8,14 @@ export default function NavBar(props) {
       height: '60px'
     }}>
       <div>
-        <a href={''} className="fas fa-home text-white home-icon ml-1"></a>
-        <p className="nav-bar-text nav-bar-text-home">Home</p>
+        <a href={''} className="fas fa-home text-center text-white home-icon">
+          <p className="mt-1 icon-text primary-font">Home</p>
+        </a>
       </div>
       <div>
-        <a href={'#history'} className="fas fa-history text-white ml-2 history-icon"></a>
-        <p className="nav-bar-text">History</p>
+        <a href={'#history'} className="fas fa-history text-center text-white history-icon">
+          <p className='mt-1 icon-text primary-font'>History</p>
+        </a>
       </div>
     </Nav>
   );
